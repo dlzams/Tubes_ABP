@@ -72,22 +72,6 @@
             showDashboard();
 
         });
-
-        function showDashboard() {
-            document.getElementById('dashboardContent').style.display = 'block';
-            document.getElementById('CarsContent').style.display = 'none';
-
-            document.getElementById('dashboardLink').classList.add('active');
-            document.getElementById('CarsLink').classList.remove('active');
-        }
-
-        function showCars() {
-            document.getElementById('dashboardContent').style.display = 'none';
-            document.getElementById('CarsContent').style.display = 'block';
-
-            document.getElementById('dashboardLink').classList.remove('active');
-            document.getElementById('CarsLink').classList.add('active');
-        };
     </script>
 
     <div class="container">
@@ -126,7 +110,7 @@
                 <div class="list-group">
                     <a href="#" class="list-group-item list-group-item-action mb-3 border active"
                         id="dashboardLink">Dashboard</a>
-                    <a href="{{ route('cars') }}" class="list-group-item list-group-item-action mb-3 border active"
+                    <a href="{{ route('cars') }}" class="list-group-item list-group-item-action mb-3 border"
                         id="CarsLink">Cars</a>
                 </div>
             </div>
@@ -191,114 +175,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- User Content -->
-                <div class="card rounded" id="CarsContent">
-                    <h5 class="card-header">Cars Content</h5>
-                    <!-- Example: Recent Active Users Table with Additional Information -->
-                    <div class="col-12 pt-3">
-                        <div class="card rounded ">
-                            {{-- <div class="card-header bg-info text-white">User Information</div> --}}
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">First Name</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Last Signed In</th>
-                                        <th scope="col">Email Verified</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Edit</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($users as $user)
-                                        <tr>
-                                            <td>{{ $user->displayName }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td>{{ Carbon\Carbon::parse($user->metadata->lastLoginAt)->diffForHumans() }}
-                                            </td>
-                                            <td style="text-align: center;">{{ $user->emailVerified ? 'Yes' : 'No' }}</td>
-                                            <td class="text-center">{{ $user->disabled ? 'Disabled' : 'Active' }}</td>
-                                            <td>
-                                                @if ($currentUser != $user->uid)
-                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                        data-target="#{{ $user->uid }}">
-                                                        Edit
-                                                    </button>
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="{{ $user->uid }}" tabindex="-1"
-                                                        role="dialog" aria-labelledby="{{ $user->uid }}"
-                                                        aria-hidden="true">
-                                                        <!-- Modal content here -->
-                                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">Edit
-                                                                        User: {{ $user->displayName }}</h5>
-                                                                    <button type="button" class="close"
-                                                                        data-dismiss="modal" aria-label="Close">
-                                                                        <span aria-hidden="true">&times;</span>
-                                                                    </button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <!-- Example: Form fields for editing user details -->
-
-                                                                    {!! Form::model($user, [
-                                                                        'method' => 'PATCH',
-                                                                        'action' => ['App\Http\Controllers\Auth\AdminController@update', $user->uid],
-                                                                    ]) !!}
-
-                                                                    <div class="form-group">
-                                                                        {!! Form::label('displayName', 'First Name:') !!}
-                                                                        {!! Form::text('displayName', null, ['class' => 'form-control']) !!}
-                                                                    </div>
-
-                                                                    <div class="form-group">
-                                                                        {!! Form::label('email', 'Email:') !!}
-                                                                        {!! Form::email('email', null, ['class' => 'form-control']) !!}
-                                                                    </div>
-
-                                                                    <div class="modal-footer border-0">
-
-
-                                                                        {{-- <button type="button" class="btn btn-success">Save changes</button> --}}
-                                                                        {!! Form::submit('Save changes', ['class' => 'btn btn-success']) !!}
-                                                                        {!! Form::close() !!}
-
-                                                                        @if ($user->disabled)
-                                                                            {!! Form::open([
-                                                                                'method' => 'DELETE',
-                                                                                'action' => ['App\Http\Controllers\Auth\AdminController@destroy', $user->uid],
-                                                                            ]) !!}
-                                                                            {!! Form::submit('Enable Account', ['class' => 'btn btn-success']) !!}
-                                                                            {!! Form::close() !!}
-                                                                        @else
-                                                                            {!! Form::open([
-                                                                                'method' => 'DELETE',
-                                                                                'action' => ['App\Http\Controllers\Auth\AdminController@destroy', $user->uid],
-                                                                            ]) !!}
-                                                                            {!! Form::submit('Disable Account', ['class' => 'btn btn-danger']) !!}
-                                                                            {!! Form::close() !!}
-                                                                        @endif
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @endif
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-
-                
-                <!-- Dummy Content -->
             </div>
         </div>
     </div>

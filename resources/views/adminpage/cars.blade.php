@@ -34,7 +34,7 @@
     @endguest
 @endsection
 
-@section('sidebar')
+@section('content')
     <style>
         /* Your styles here */
         body {
@@ -89,74 +89,71 @@
                     <a href="/home/admin" class="list-group-item list-group-item-action mb-3 border"
                         id="dashboardLink">Dashboard</a>
                     <a href="{{ route('cars') }}" class="list-group-item list-group-item-action mb-3 border active"
-                        id="carsLink">Cars</a>
+                        id="CarsLink">Cars</a>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 p-1">
+                <!-- Dashboard Content -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5>
+                            Your Cars List
+                            <a href="{{ route('add_cars') }}" class="btn btn-sm btn-primary float-end">Add Cars</a>
+                        </h5>
+                    </div>
+                    <div class="card-body row" style="float: inline-end">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Merk</th>
+                                    <th>Model</th>
+                                    <th>Tahun Pembuatan</th>
+                                    <th>Kondisi</th>
+                                    <th>Bahan Bakar</th>
+                                    <th>Warna</th>
+                                    <th>Harga</th>
+                                    <th>Deskripsi</th>
+                                    <th>Kontak Penjual</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($reference as $key => $item)
+                                    <tr>
+                                        @if ($item['email_penjual'] == $email_penjual)
+                                            <td> {{ $item['merk'] }} </td>
+                                            <td> {{ $item['model'] }} </td>
+                                            <td> {{ $item['tahun_pembuatan'] }} </td>
+                                            <td> {{ $item['kondisi'] }} </td>
+                                            <td> {{ $item['bahan_bakar'] }} </td>
+                                            <td> {{ $item['warna'] }} </td>
+                                            <td> {{ $item['harga'] }} </td>
+                                            <td> {{ $item['deskripsi'] }} </td>
+                                            <td> {{ $item['kontak_penjual'] }} </td>
+                                            <td><a href="{{ url('/home/cars/edit_cars/' . $key) }}"
+                                                    class="btn btn-sm btn-success">Edit</a></td>
+                                            <td>
+                                                <form action="{{ route('delete_cars', ['id' => $key]) }}" method="post"
+                                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                                </form>
+                                            </td>
+                                        @endif
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="9">No Record Found</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
-
-@section('content')
-    <div class="container">
-        <div class="col-md-6">
-            @if (session('status'))
-                <h4 class="alert alert-warning mb-2"> {{ session('status') }} </h4>
-            @endif
-
-    <style>
-        .box-container {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .box {
-            width: 200px;
-            height: 150px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            transition: all 0.3s ease;
-        }
-
-        .box:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .box a {
-            text-decoration: none;
-            color: #333;
-            margin-top: 10px;
-        }
-
-        .box button {
-            padding: 10px 20px;
-            border: none;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .box button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-
-    <div class="box-container">
-        <div class="box">
-            <h3>Add Cars</h3>
-            <a href="{{ route('add_cars') }}"><button>Add Cars</button></a>
-        </div>
-        <div class="box">
-            <h3>View Cars</h3>
-            <a href="{{ route('view_cars') }}"><button>View Cars</button></a>
-        </div>
-    </div>
-    @endsection

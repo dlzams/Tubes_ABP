@@ -15,7 +15,7 @@
     @else
         @if ($user->customClaims['admin'])
             <li class="nav-item">
-                <a class="nav-link text-dark" href="/home/admin">{{ __('Admin') }}</a>
+                <a class="nav-link text-dark" href="/home/admin">{{ __('Seller') }}</a>
             </li>
         @endif
 

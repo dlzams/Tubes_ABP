@@ -31,7 +31,7 @@
                     <div class="card-body">
                         <h3 class="text-primary">Upload Image</h3><br>
                         {!! Form::open([
-                            'action' => 'app\Http\Controllers\Firebase\ImageController.php@store',
+                            'action' => 'App\Http\Controllers\Firebase\ImageController@store',
                             'method' => 'POST',
                             'files' => true,
                         ]) !!}
@@ -46,24 +46,6 @@
                             {!! Form::submit('Upload', ['class' => 'btn btn-primary']) !!}
                         </div>
 
-                        {!! Form::close() !!}
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 pt-lg-0 pt-3">
-                <div class="card shadow rounded">
-                    <div class="card-body">
-                        <h3 class="text-primary">Image fetched from Firebase Storage.</h3>
-                        <img src="{{ $image }}" class="img-fluid" alt="Responsive image">
-                        <br>
-                        <a href="{{ $image }}">Link generated from Firebase</a>
-                        {!! Form::open([
-                            'method' => 'DELETE',
-                            'action' => ['app\Http\Controllers\Firebase\ImageController@destroy', 'delete'],
-                        ]) !!}
-                        <div class="form-group pt-2">
-                            {!! Form::submit('Delete Image', ['class' => 'btn btn-danger']) !!}
-                        </div>
                         {!! Form::close() !!}
                     </div>
                 </div>
