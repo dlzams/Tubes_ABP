@@ -75,55 +75,54 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         {!! Form::label('merk', 'Merk:') !!}
-                        {!! Form::text('merk', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                        {!! Form::text('merk', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'ex: Toyota']) !!}
                     </div>
 
                     <div class="form-group">
                         {!! Form::label('model', 'Model:') !!}
-                        {!! Form::text('model', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                        {!! Form::text('model', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'ex: Avanza Veloz']) !!}
                     </div>
 
                     <div class="form-group">
                         {!! Form::label('tahun_pembuatan', 'Tahun Pembuatan:') !!}
-                        {!! Form::text('tahun_pembuatan', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                        {!! Form::number('tahun_pembuatan', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'ex: 2020']) !!}
                     </div>
 
                     <div class="form-group">
-                        {!! Form::label('kondisi', 'Kondisi (Baru/Bekas):') !!}
-                        {!! Form::text('kondisi', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                        {!! Form::label('kondisi', 'Kondisi:') !!}
+                        {!! Form::select('kondisi', ['Baru' => 'Baru', 'Bekas' => 'Bekas'], null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'Baru/Bekas']) !!}
                     </div>
 
                     <div class="form-group">
                         {!! Form::label('bahan_bakar', 'Bahan Bakar:') !!}
-                        {!! Form::text('bahan_bakar', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                        {!! Form::select('bahan_bakar', ['Bensin (Gasoline)' => 'Bensin (Gasoline)', 'Solar (Diesel)' => 'Solar (Diesel)', 'Gas alam kendaraan (CNG)' => 'Gas alam kendaraan (CNG)', 'Listrik (Electricity)' => 'Listrik (Electricity)'], null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'Bensin/Solar/CNG/Listrik']) !!}
                     </div>
                 </div>
 
                 <div class="col-md-6">
-
                     <div class="form-group">
                         {!! Form::label('transmisi', 'Transmisi:') !!}
-                        {!! Form::text('transmisi', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                        {!! Form::select('transmisi', ['Matic' => 'Matic', 'Manual' => 'Manual'], null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'Manual/Matic']) !!}
                     </div>
 
                     <div class="form-group">
                         {!! Form::label('warna', 'Warna:') !!}
-                        {!! Form::text('warna', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                        {!! Form::text('warna', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'ex : Merah']) !!}
                     </div>
 
                     <div class="form-group">
                         {!! Form::label('harga', 'Harga:') !!}
-                        {!! Form::text('harga', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                        {!! Form::number('harga', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'ex: 50.000.000']) !!}
                     </div>
 
                     <div class="form-group">
                         {!! Form::label('deskripsi', 'Deskripsi Tambahan (Jika tidak, isi "-" saja): ') !!}
-                        {!! Form::text('deskripsi', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                        {!! Form::text('deskripsi', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'ex: km 10.000 dan warna sedikit luntur']) !!}
                     </div>
 
                     <div class="form-group">
                         {!! Form::label('kontak_penjual', 'Kontak Penjual (WA):') !!}
-                        {!! Form::text('kontak_penjual', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                        {!! Form::text('kontak_penjual', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'ex : 08xxxxxxx']) !!}
                     </div>
                 </div>
             </div>
@@ -138,5 +137,15 @@
 
             {!! Form::close() !!}
         </div>
+        <script>
+            // Menghapus placeholder saat input field diisi
+            document.querySelectorAll('.form-control').forEach(input => {
+                input.addEventListener('input', () => {
+                    input.removeAttribute('placeholder');
+                });
+            });
+        </script>
     </div>
+
+
 @endsection
