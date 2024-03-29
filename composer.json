@@ -1,5 +1,5 @@
 {
-    "name": "BaroCars",
+    "name": "baro_cars/test",
     "type": "project",
     "description": "A Laravel project which connects you to firebase.",
     "keywords": [
