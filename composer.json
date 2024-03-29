@@ -1,5 +1,5 @@
 {
-    "name": "KStarID",
+    "name": "dlzams/tubes_abp",
     "type": "project",
     "description": "A Laravel project which connects you to firebase.",
     "keywords": [
