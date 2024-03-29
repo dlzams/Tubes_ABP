@@ -120,35 +120,42 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse($reference as $key => $item)
+                                @if($reference)
+                                    @forelse($reference as $key => $item)
+                                        <tr>
+                                            @if ($item['email_penjual'] == $email_penjual)
+                                                <td>{{ $item['merk'] }}</td>
+                                                <td>{{ $item['model'] }}</td>
+                                                <td>{{ $item['tahun_pembuatan'] }}</td>
+                                                <td>{{ $item['kondisi'] }}</td>
+                                                <td>{{ $item['bahan_bakar'] }}</td>
+                                                <td>{{ $item['warna'] }}</td>
+                                                <td>{{ $item['harga'] }}</td>
+                                                <td>{{ $item['deskripsi'] }}</td>
+                                                <td>{{ $item['kontak_penjual'] }}</td>
+                                                <td>
+                                                    <a href="{{ url('/home/cars/edit_cars/' . $key) }}" class="btn btn-sm btn-success">Edit</a>
+                                                </td>
+                                                <td>
+                                                    <form action="{{ route('delete_cars', ['id' => $key]) }}" method="post"
+                                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                                    </form>
+                                                </td>
+                                            @endif
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="11">No Record Found</td>
+                                        </tr>
+                                    @endforelse
+                                @else
                                     <tr>
-                                        @if ($item['email_penjual'] == $email_penjual)
-                                            <td> {{ $item['merk'] }} </td>
-                                            <td> {{ $item['model'] }} </td>
-                                            <td> {{ $item['tahun_pembuatan'] }} </td>
-                                            <td> {{ $item['kondisi'] }} </td>
-                                            <td> {{ $item['bahan_bakar'] }} </td>
-                                            <td> {{ $item['warna'] }} </td>
-                                            <td> {{ $item['harga'] }} </td>
-                                            <td> {{ $item['deskripsi'] }} </td>
-                                            <td> {{ $item['kontak_penjual'] }} </td>
-                                            <td><a href="{{ url('/home/cars/edit_cars/' . $key) }}"
-                                                    class="btn btn-sm btn-success">Edit</a></td>
-                                            <td>
-                                                <form action="{{ route('delete_cars', ['id' => $key]) }}" method="post"
-                                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                                </form>
-                                            </td>
-                                        @endif
+                                        <td colspan="11">No Record Found</td>
                                     </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="9">No Record Found</td>
-                                    </tr>
-                                @endforelse
+                                @endif
                             </tbody>
                         </table>
                     </div>

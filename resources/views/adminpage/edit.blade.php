@@ -82,25 +82,25 @@
 
                         <div class="form-group">
                             <label for="model">Model:</label>
-                            <input type="text" name="model" value="{{ $editdata['merk'] }}" class="form-control"
+                            <input type="text" name="model" value="{{ $editdata['model'] }}" class="form-control"
                                 required>
                         </div>
 
                         <div class="form-group">
                             <label for="tahun_pembuatan">Tahun Pembuatan:</label>
-                            <input type="text" name="tahun_pembuatan" value="{{ $editdata['merk'] }}"
+                            <input type="text" name="tahun_pembuatan" value="{{ $editdata['tahun_pembuatan'] }}"
                                 class="form-control" required>
                         </div>
 
                         <div class="form-group">
                             <label for="kondisi">Kondisi (Baru/Bekas):</label>
-                            <input type="text" name="kondisi" value="{{ $editdata['merk'] }}" class="form-control"
+                            <input type="text" name="kondisi" value="{{ $editdata['kondisi'] }}" class="form-control"
                                 required>
                         </div>
 
                         <div class="form-group">
                             <label for="bahan_bakar">Bahan Bakar:</label>
-                            <input type="text" name="bahan_bakar" value="{{ $editdata['merk'] }}" class="form-control"
+                            <input type="text" name="bahan_bakar" value="{{ $editdata['bahan_bakar'] }}" class="form-control"
                                 required>
                         </div>
                     </div>
@@ -109,31 +109,31 @@
 
                         <div class="form-group">
                             <label for="transmisi">Transmisi:</label>
-                            <input type="text" name="transmisi" value="{{ $editdata['merk'] }}" class="form-control"
+                            <input type="text" name="transmisi" value="{{ $editdata['transmisi'] }}" class="form-control"
                                 required>
                         </div>
 
                         <div class="form-group">
                             <label for="warna">Warna:</label>
-                            <input type="text" name="warna" value="{{ $editdata['merk'] }}" class="form-control"
+                            <input type="text" name="warna" value="{{ $editdata['warna'] }}" class="form-control"
                                 required>
                         </div>
 
                         <div class="form-group">
                             <label for="harga">Harga:</label>
-                            <input type="text" name="harga" value="{{ $editdata['merk'] }}" class="form-control"
+                            <input type="text" name="harga" value="{{ $editdata['harga'] }}" class="form-control"
                                 required>
                         </div>
 
                         <div class="form-group">
                             <label for="deskripsi">Deskripsi Tambahan (Jika tidak, isi "-" saja):</label>
-                            <input type="text" name="deskripsi" value="{{ $editdata['merk'] }}" class="form-control"
+                            <input type="text" name="deskripsi" value="{{ $editdata['deskripsi'] }}" class="form-control"
                                 required>
                         </div>
 
                         <div class="form-group">
                             <label for="kontak_penjual">Kontak Penjual (WA):</label>
-                            <input type="text" name="kontak_penjual" value="{{ $editdata['merk'] }}"
+                            <input type="text" name="kontak_penjual" value="{{ $editdata['kontak_penjual'] }}"
                                 class="form-control" required>
                         </div>
                     </div>

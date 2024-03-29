@@ -49,7 +49,7 @@ class CarsController extends Controller
         ];
         $postRef = $this->database->getReference($this->tablename)->push($post_data);
         if ($postRef) {
-            Session::flash('message', 'New Cars Created');
+            Session::flash('message', 'Add Cars Success');
             return redirect('/home/cars')->with('status', 'Success');
         } else {
             return redirect('/home/admin')->with('status', 'error');
@@ -96,6 +96,7 @@ class CarsController extends Controller
         ];
         $res_updated = $this->database->getReference($this->tablename . '/' . $key)->update($update_data);
         if ($res_updated) {
+            Session::flash('message', 'Edit Cars Success');
             return redirect('/home/cars')->with('status', 'updated');
         } else {
             return redirect('adminpage.cars')->with('status', 'error');
