@@ -23,7 +23,7 @@ class HomeController extends Controller
   {
     $this->middleware('auth');
     $this->database = $database;
-    $this->tablename = 'data';
+    $this->tablename = 'cars';
   }
 
   /**

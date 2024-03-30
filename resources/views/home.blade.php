@@ -33,11 +33,14 @@
                 @csrf
             </form>
         </li>
+        @if ($user->customClaims['admin'] == false)
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="/home/iamadmin">Become Seller</a>
+            </li>
+        @endif
         </div>
-        </li>
     @endguest
-@endsection
-@section('content')
+    @endsection @section('content')
     <div class="row">
         <div class="col-md-12">
 
@@ -55,25 +58,35 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Title</th>
-                                <th>Category</th>
-                                <th>Description</th>
-                                <th>Author</th>
+                                <th>Merk</th>
+                                <th>Model</th>
+                                <th>Tahun Pembuatan</th>
+                                <th>Kondisi</th>
+                                <th>Bahan Bakar</th>
+                                <th>Warna</th>
+                                <th>Harga</th>
+                                <th>Deskripsi</th>
+                                <th>Kontak Penjual</th>
+                                <th>Email Penjual</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($reference as $key => $item)
                                 <tr>
-                                    <td> {{ $key }} </td>
-                                    <td> {{ $item['title'] }} </td>
-                                    <td> {{ $item['category'] }} </td>
-                                    <td> {{ $item['description'] }} </td>
-                                    <td> {{ $item['author'] }} </td>
+                                    <td>{{ $item['merk'] }}</td>
+                                    <td>{{ $item['model'] }}</td>
+                                    <td>{{ $item['tahun_pembuatan'] }}</td>
+                                    <td>{{ $item['kondisi'] }}</td>
+                                    <td>{{ $item['bahan_bakar'] }}</td>
+                                    <td>{{ $item['warna'] }}</td>
+                                    <td>{{ $item['harga'] }}</td>
+                                    <td>{{ $item['deskripsi'] }}</td>
+                                    <td>{{ $item['kontak_penjual'] }}</td>
+                                    <td> {{ $item['email_penjual'] }} </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="7">No Record Found</td>
+                                    <td colspan="10">No Record Found</td>
                                 </tr>
                             @endforelse
                         </tbody>

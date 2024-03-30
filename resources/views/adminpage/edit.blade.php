@@ -100,8 +100,8 @@
 
                         <div class="form-group">
                             <label for="bahan_bakar">Bahan Bakar:</label>
-                            <input type="text" name="bahan_bakar" value="{{ $editdata['bahan_bakar'] }}" class="form-control"
-                                required>
+                            <input type="text" name="bahan_bakar" value="{{ $editdata['bahan_bakar'] }}"
+                                class="form-control" required>
                         </div>
                     </div>
 
@@ -109,8 +109,8 @@
 
                         <div class="form-group">
                             <label for="transmisi">Transmisi:</label>
-                            <input type="text" name="transmisi" value="{{ $editdata['transmisi'] }}" class="form-control"
-                                required>
+                            <input type="text" name="transmisi" value="{{ $editdata['transmisi'] }}"
+                                class="form-control" required>
                         </div>
 
                         <div class="form-group">
@@ -127,8 +127,8 @@
 
                         <div class="form-group">
                             <label for="deskripsi">Deskripsi Tambahan (Jika tidak, isi "-" saja):</label>
-                            <input type="text" name="deskripsi" value="{{ $editdata['deskripsi'] }}" class="form-control"
-                                required>
+                            <input type="text" name="deskripsi" value="{{ $editdata['deskripsi'] }}"
+                                class="form-control" required>
                         </div>
 
                         <div class="form-group">
@@ -142,10 +142,6 @@
                 <div class="form-group text-center">
                     <button type="submit" class="btn btn-primary btn-lg" onclick="return confirmSubmission()">Update
                         Cars</button>
-                </div>
-
-                <div class="form-group text-center">
-                    <button type="reset" class="btn btn-secondary btn-lg">Reset</button>
                 </div>
             </form>
 

@@ -36,17 +36,10 @@ Route::resource('/home/profile', App\Http\Controllers\Auth\ProfileController::cl
 Route::resource('/home/admin', App\Http\Controllers\Auth\AdminController::class)->middleware(['user', 'fireauth']);
 
 Route::middleware(['auth', 'fireauth'])->group(function () {
-    Route::get('/home/dashboard', function () {
-        return view('adminpage.dashboard');
-    })->name('dashboard');
-
     Route::get('/home/cars', [App\Http\Controllers\Firebase\CarsController::class, 'index'])->name('cars');
-
     Route::get('/home/cars/add_cars', function () {
-        return view('adminpage\add_cars');
+        return view('adminpage.add_cars');
     })->name('add_cars');
-
-    Route::get('/home/cars/view_cars', [App\Http\Controllers\Firebase\CarsController::class, 'index'])->name('view_cars');
     Route::post('/home/cars/add_cars', [App\Http\Controllers\Firebase\CarsController::class, 'store'])->name('add_cars');
 
     Route::delete('/home/cars/delete_cars/{id}', [App\Http\Controllers\Firebase\CarsController::class, 'delete_cars'])->name('delete_cars');

@@ -120,7 +120,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @if($reference)
+                                @if ($reference)
                                     @forelse($reference as $key => $item)
                                         <tr>
                                             @if ($item['email_penjual'] == $email_penjual)
@@ -134,10 +134,12 @@
                                                 <td>{{ $item['deskripsi'] }}</td>
                                                 <td>{{ $item['kontak_penjual'] }}</td>
                                                 <td>
-                                                    <a href="{{ url('/home/cars/edit_cars/' . $key) }}" class="btn btn-sm btn-success">Edit</a>
+                                                    <a href="{{ url('/home/cars/edit_cars/' . $key) }}"
+                                                        class="btn btn-sm btn-success">Edit</a>
                                                 </td>
                                                 <td>
-                                                    <form action="{{ route('delete_cars', ['id' => $key]) }}" method="post"
+                                                    <form action="{{ route('delete_cars', ['id' => $key]) }}"
+                                                        method="post"
                                                         onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                                         @csrf
                                                         @method('delete')

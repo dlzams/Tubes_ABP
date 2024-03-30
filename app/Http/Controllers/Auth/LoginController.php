@@ -61,7 +61,7 @@ class LoginController extends Controller
       $loginuid = $signInResult->firebaseUserId();
       Session::put('uid', $loginuid);
       $auth = app('firebase.auth');
-      $auth->setCustomUserClaims($loginuid, ['admin' => true]);
+      $auth->setCustomUserClaims($loginuid, ['admin' => false]);
 
       $result = Auth::login($user);
       // $userDetails = app('firebase.auth')->getUser($loginuid);
