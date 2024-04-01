@@ -57,139 +57,151 @@
         }
     </script>
 
-    <div class="card rounded" id="dummyCarsContent">
-        <div class="card-header">
-            <h5>
-                Add New Cars
-                <a href="{{ route('cars') }}" class="btn btn-sm btn-danger float-end">Back</a>
-            </h5>
-        </div>
-        <div class="card-body">
-            <!-- New Car Form -->
-            {!! Form::open(['method' => 'POST', 'action' => 'App\Http\Controllers\Firebase\CarsController@store']) !!}
+    <div class="container">
+        <div class="card rounded" id="dummyCarsContent">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="text-lg font-semibold">Add New Car
+                        <a href="{{ route('cars') }}" class="btn btn-sm btn-ghost float-end">Back</a>
+                    </h4>
+                </div>
+            </div>
+            <div class="card-body">
+                <!-- New Car Form -->
+                {!! Form::open(['method' => 'POST', 'action' => 'App\Http\Controllers\Firebase\CarsController@store']) !!}
 
-            <!-- Field untuk Email Penjual -->
-            {!! Form::hidden('email_penjual', auth()->user()->email) !!}
+                <!-- Field untuk Email Penjual -->
+                {!! Form::hidden('email_penjual', auth()->user()->email) !!}
 
-            <div class="row">
-                <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="input input-bordered flex items-center gap-2 bg-white">
+                                Merk
+                                {!! Form::text('merk', null, [  
+                                    'required' => 'required',
+                                    'class' => 'grow',
+                                    'placeholder' => 'Toyota',
+                                ]) !!}
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="input input-bordered flex items-center gap-2 bg-white">
+                                Model
+                                {!! Form::text('model', null, [
+                                    'required' => 'required',
+                                    'class' => 'grow',
+                                    'placeholder' => 'Avanza',
+                                ]) !!}
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="input input-bordered flex items-center gap-2 bg-white">
+                                Tahun Pembuatan
+                                {!! Form::number('tahun_pembuatan', null, [
+                                    'required' => 'required',
+                                    'class' => 'grow',
+                                    'placeholder' => '2020',
+                                ]) !!}
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            {!! Form::select('kondisi', ['Baru' => 'Baru', 'Bekas' => 'Bekas'], null, [
+                                'class' => 'form-control',
+                                'required' => 'required',
+                                'placeholder' => 'Baru/Bekas',
+                            ]) !!}
+                        </div>
+
+                        <div class="form-group">
+                            {!! Form::select(
+                                'bahan_bakar',
+                                [
+                                    'Bensin (Gasoline)' => 'Bensin (Gasoline)',
+                                    'Solar (Diesel)' => 'Solar (Diesel)',
+                                    'Gas alam (CNG)' => 'Gas alam (CNG)',
+                                    'Listrik (Electricity)' => 'Listrik (Electricity)',
+                                ],
+                                null,
+                                ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'Bensin/Solar/CNG/Listrik'],
+                            ) !!}
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {!! Form::select('transmisi', ['Matic' => 'Matic', 'Manual' => 'Manual'], null, [
+                                'class' => 'form-control',
+                                'required' => 'required',
+                                'placeholder' => 'Manual/Matic',
+                            ]) !!}
+                        </div>
+
                     <div class="form-group">
-                        {!! Form::label('merk', 'Merk:') !!}
-                        {!! Form::text('merk', null, [
-                            'class' => 'form-control',
-                            'required' => 'required',
-                            'placeholder' => 'ex: Toyota',
-                        ]) !!}
+                        <label class="input input-bordered flex items-center gap-2 bg-white">
+                            Warna
+                            {!! Form::text('warna', null, [
+                                'required' => 'required',
+                                'class' => 'grow',
+                                'placeholder' => 'Merah',
+                            ]) !!}
+                        </label>
                     </div>
 
                     <div class="form-group">
-                        {!! Form::label('model', 'Model:') !!}
-                        {!! Form::text('model', null, [
-                            'class' => 'form-control',
-                            'required' => 'required',
-                            'placeholder' => 'ex: Avanza Veloz',
-                        ]) !!}
+                        <label class="input input-bordered flex items-center gap-2 bg-white">
+                            Harga
+                            {!! Form::text('harga', null, [
+                                'required' => 'required',
+                                'class' => 'grow',
+                                'placeholder' => '50.000.000',
+                            ]) !!}
+                        </label>
                     </div>
 
                     <div class="form-group">
-                        {!! Form::label('tahun_pembuatan', 'Tahun Pembuatan:') !!}
-                        {!! Form::number('tahun_pembuatan', null, [
-                            'class' => 'form-control',
-                            'required' => 'required',
-                            'placeholder' => 'ex: 2020',
-                        ]) !!}
+                        <label class="input input-bordered flex items-center gap-2 bg-white">
+                            Deskripsi (Jika tidak, isi "-") 
+                            {!! Form::text('deskripsi', null, [
+                                'required' => 'required',
+                                'class' => 'grow',
+                                'placeholder' => 'km 10.000, pajak hidup, service rutin',
+                            ]) !!}
+                        </label>
                     </div>
 
                     <div class="form-group">
-                        {!! Form::label('kondisi', 'Kondisi:') !!}
-                        {!! Form::select('kondisi', ['Baru' => 'Baru', 'Bekas' => 'Bekas'], null, [
-                            'class' => 'form-control',
-                            'required' => 'required',
-                            'placeholder' => 'Baru/Bekas',
-                        ]) !!}
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label('bahan_bakar', 'Bahan Bakar:') !!}
-                        {!! Form::select(
-                            'bahan_bakar',
-                            [
-                                'Bensin (Gasoline)' => 'Bensin (Gasoline)',
-                                'Solar (Diesel)' => 'Solar (Diesel)',
-                                'Gas alam kendaraan (CNG)' => 'Gas alam kendaraan (CNG)',
-                                'Listrik (Electricity)' => 'Listrik (Electricity)',
-                            ],
-                            null,
-                            ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'Bensin/Solar/CNG/Listrik'],
-                        ) !!}
+                        <label class="input input-bordered flex items-center gap-2 bg-white">
+                            Kontak Penjual (WA)
+                            {!! Form::text('kontak_penjual', null, [
+                                'required' => 'required',
+                                'class' => 'grow',
+                                'placeholder' => '08xxxxxxx',
+                            ]) !!}
+                        </label>
                     </div>
                 </div>
 
-                <div class="col-md-6">
-                    <div class="form-group">
-                        {!! Form::label('transmisi', 'Transmisi:') !!}
-                        {!! Form::select('transmisi', ['Matic' => 'Matic', 'Manual' => 'Manual'], null, [
-                            'class' => 'form-control',
-                            'required' => 'required',
-                            'placeholder' => 'Manual/Matic',
-                        ]) !!}
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label('warna', 'Warna:') !!}
-                        {!! Form::text('warna', null, [
-                            'class' => 'form-control',
-                            'required' => 'required',
-                            'placeholder' => 'ex : Merah',
-                        ]) !!}
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label('harga', 'Harga:') !!}
-                        {!! Form::text('harga', null, [
-                            'class' => 'form-control',
-                            'required' => 'required',
-                            'placeholder' => 'ex: 50.000.000',
-                        ]) !!}
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label('deskripsi', 'Deskripsi Tambahan (Jika tidak, isi "-" saja): ') !!}
-                        {!! Form::text('deskripsi', null, [
-                            'class' => 'form-control',
-                            'required' => 'required',
-                            'placeholder' => 'ex: km 10.000 dan warna sedikit luntur',
-                        ]) !!}
-                    </div>
-
-                    <div class="form-group">
-                        {!! Form::label('kontak_penjual', 'Kontak Penjual (WA):') !!}
-                        {!! Form::text('kontak_penjual', null, [
-                            'class' => 'form-control',
-                            'required' => 'required',
-                            'placeholder' => 'ex : 08xxxxxxx',
-                        ]) !!}
-                    </div>
+                <div class="form-group text-center">
+                    {!! Form::submit('Add Cars', ['class' => 'btn btn-accent btn-wide', 'onclick' => 'return confirmSubmission()']) !!}
                 </div>
-            </div>
 
-            <div class="form-group text-center">
-                {!! Form::submit('Add Cars', ['class' => 'btn btn-primary btn-lg', 'onclick' => 'return confirmSubmission()']) !!}
-            </div>
+                <div class="form-group text-center">
+                    <button type="reset" class="btn btn-sm btn-outline btn-error ">Reset</button>
+                </div>
 
-            <div class="form-group text-center">
-                <button type="reset" class="btn btn-secondary btn-lg">Reset</button>
+                {!! Form::close() !!}
             </div>
-
-            {!! Form::close() !!}
-        </div>
-        <script>
-            // Menghapus placeholder saat input field diisi
-            document.querySelectorAll('.form-control').forEach(input => {
-                input.addEventListener('input', () => {
-                    input.removeAttribute('placeholder');
+            <script>
+                // Menghapus placeholder saat input field diisi
+                document.querySelectorAll('.form-control').forEach(input => {
+                    input.addEventListener('input', () => {
+                        input.removeAttribute('placeholder');
+                    });
                 });
-            });
-        </script>
+            </script>
+        </div>
     </div>
 @endsection

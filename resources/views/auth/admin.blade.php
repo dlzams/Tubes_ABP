@@ -54,26 +54,6 @@
         }
     </style>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#usersTable').DataTable({
-                "order": [
-                    [1, "desc"]
-                ],
-                "searching": false,
-                "lengthChange": false,
-                "pageLength": 10,
-                "paging": false,
-                "info": false,
-            });
-
-            showDashboard();
-
-        });
-    </script>
-
     <div class="container">
 
         @if (Session::has('message'))

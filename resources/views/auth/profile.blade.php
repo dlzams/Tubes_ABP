@@ -152,7 +152,7 @@
                     {!! Form::open() !!}
                     <div class="form-group row mb-0 mr-4 pt-4 px-3">
                         <div class="col-md-8 offset-l-4 text-left">
-                            {!! Form::submit('Delete Account', ['class' => 'btn btn-danger pl-3']) !!}
+                            {!! Form::submit('Delete Account', ['class' => 'btn btn-error pl-3']) !!}
                         </div>
                     </div>
                     {!! Form::close() !!}

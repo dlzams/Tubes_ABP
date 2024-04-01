@@ -19,24 +19,23 @@ class ImageController extends Controller
     {
         $this->database = $database;
         $this->storage = $storage;
-        $this->tablename = 'image';
+        $this->tablename = 'cars';
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
 
-        // Path gambar di Firebase Storage
-        $imagePath = 'Images/defT5uT7SDu9K5RFtIdl.png';
-
-        // Dapatkan URL tanda tangan yang ditandatangani untuk gambar
-        $image = $this->storage->getBucket()->object($imagePath)->signedUrl(new \DateTime('+5 minutes'));
-
-        // URL tanda tangan berhasil diambil
-        return view('firebase.contact.index', compact('image'));
+        $key = $id;
+        $editdata = $this->database->getReference($this->tablename)->getChild($key)->getValue();
+        if ($editdata) {
+            return view('adminpage.upload_image', compact('editdata', 'key'));
+        } else {
+            return redirect('adminpage.cars')->with('status', 'error');
+        }
     }
 
     /**
@@ -132,6 +131,47 @@ class ImageController extends Controller
     public function update(Request $request, $id)
     {
         //
+    }
+
+    public function storeimage(Request $request, $id)
+    {
+        // Validasi request untuk memastikan file gambar telah disertakan
+        $request->validate([
+            'image' => 'required|image',
+        ]);
+
+        $key = $id;
+
+        // Ambil file gambar dari request
+        $image = $request->file('image');
+
+        // Path penyimpanan di Firebase Storage
+        $storagePath = 'Images/';
+
+        // Generate nama file unik
+        $fileName = uniqid() . '.' . $image->getClientOriginalExtension();
+
+        // Simpan file gambar ke Firebase Storage
+        $this->storage->getBucket()->upload(
+            file_get_contents($image->getRealPath()),
+            [
+                'name' => $storagePath . $fileName,
+            ]
+        );
+
+        $signedUrl = $this->storage->getBucket()->object($storagePath . $fileName)->signedUrl(new \DateTime('300 years'));
+
+        $post_data = [
+            'image' => $signedUrl
+        ];
+
+        $res_updated = $this->database->getReference($this->tablename . '/' . $key)->update($post_data);
+        if ($res_updated) {
+            Session::flash('photo', 'Photo updated successfully');
+            return redirect('/home/cars')->with('status', 'Success');
+        } else {
+            return redirect('/home')->with('status', 'error');
+        }
     }
 
     /**

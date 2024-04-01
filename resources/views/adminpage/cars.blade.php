@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('navbar_home')
     @guest
         @if (Route::has('login'))
@@ -63,8 +64,26 @@
             </p>
         @endif
 
+        @if (Session::has('edit'))
+            <p class=" pb-3 alert {{ Session::get('alert-class', 'alert-success') }} alert-dismissible fade show">
+                {{ Session::get('edit') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </p>
+        @endif
+
+        @if (Session::has('photo'))
+            <p class=" pb-3 alert {{ Session::get('alert-class', 'alert-warning') }} alert-dismissible fade show">
+                {{ Session::get('photo') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </p>
+        @endif
+
         @if (Session::has('delete'))
-            <p class=" pb-3 alert {{ Session::get('alert-class', 'alert-danger') }} alert-dismissible fade show">
+            <p class=" pb-3 alert {{ Session::get('alert-class', 'alert-error') }} alert-dismissible fade show">
                 {{ Session::get('delete') }}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -97,15 +116,17 @@
                 <!-- Dashboard Content -->
                 <div class="card">
                     <div class="card-header">
-                        <h5>
-                            Your Cars List
+                        <h4 class="text-lg font-semibold">Your Cars List
                             <a href="{{ route('add_cars') }}" class="btn btn-sm btn-primary float-end">Add Cars</a>
-                        </h5>
+                        </h4>
                     </div>
-                    <div class="card-body row" style="float: inline-end">
-                        <table class="table table-bordered">
+                    <br>
+                    <div class="overflow-x-auto">
+                        <table class="table">
+                            <!-- head -->
                             <thead>
                                 <tr>
+                                    <th>Image</th>
                                     <th>Merk</th>
                                     <th>Model</th>
                                     <th>Tahun Pembuatan</th>
@@ -119,45 +140,55 @@
                                     <th>Delete</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @if ($reference)
-                                    @forelse($reference as $key => $item)
-                                        <tr>
-                                            @if ($item['email_penjual'] == $email_penjual)
-                                                <td>{{ $item['merk'] }}</td>
-                                                <td>{{ $item['model'] }}</td>
-                                                <td>{{ $item['tahun_pembuatan'] }}</td>
-                                                <td>{{ $item['kondisi'] }}</td>
-                                                <td>{{ $item['bahan_bakar'] }}</td>
-                                                <td>{{ $item['warna'] }}</td>
-                                                <td>{{ $item['harga'] }}</td>
-                                                <td>{{ $item['deskripsi'] }}</td>
-                                                <td>{{ $item['kontak_penjual'] }}</td>
-                                                <td>
-                                                    <a href="{{ url('/home/cars/edit_cars/' . $key) }}"
-                                                        class="btn btn-sm btn-success">Edit</a>
-                                                </td>
-                                                <td>
-                                                    <form action="{{ route('delete_cars', ['id' => $key]) }}"
-                                                        method="post"
-                                                        onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                                        @csrf
-                                                        @method('delete')
-                                                        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                                    </form>
-                                                </td>
-                                            @endif
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="11">No Record Found</td>
-                                        </tr>
-                                    @endforelse
-                                @else
+                            @if ($reference)
+                                @forelse($reference as $key => $item)
+                                    <tr>
+                                        @if ($item['email_penjual'] == $email_penjual)
+                                            <td>
+                                                <div class="flex items-center gap-3">
+                                                    <div class="avatar">
+                                                        <div class="mask mask-squircle w-12 h-12">
+                                                            <a href="{{ url('/home/upload_image/' . $key) }}"><img
+                                                                    src={{ $item['image'] }}
+                                                                    alt="Avatar Tailwind CSS Component" />
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>{{ $item['merk'] }}</td>
+                                            <td>{{ $item['model'] }}</td>
+                                            <td>{{ $item['tahun_pembuatan'] }}</td>
+                                            <td>{{ $item['kondisi'] }}</td>
+                                            <td>{{ $item['bahan_bakar'] }}</td>
+                                            <td>{{ $item['warna'] }}</td>
+                                            <td>{{ $item['harga'] }}</td>
+                                            <td style="max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $item['deskripsi'] }}</td>
+                                            <td>{{ $item['kontak_penjual'] }}</td>
+                                            <td>
+                                                <a href="{{ url('/home/cars/edit_cars/' . $key) }}"
+                                                    class="btn btn-sm btn-success">Edit</a>
+                                            </td>
+                                            <td>
+                                                <form action="{{ route('delete_cars', ['id' => $key]) }}" method="post"
+                                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-sm btn-error">Delete</button>
+                                                </form>
+                                            </td>
+                                        @endif
+                                    </tr>
+                                @empty
                                     <tr>
                                         <td colspan="11">No Record Found</td>
                                     </tr>
-                                @endif
+                                @endforelse
+                            @else
+                                <tr>
+                                    <td colspan="11">No Record Found</td>
+                                </tr>
+                            @endif
                             </tbody>
                         </table>
                     </div>
