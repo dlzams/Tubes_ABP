@@ -8,6 +8,9 @@ use Kreait\Firebase\Contract\Database;
 use Session;
 use Kreait\Firebase\Exception\FirebaseException;
 use Kreait\Firebase\Contract\Storage;
+use Kreait\Firebase\Database\ServerValue;
+use Carbon\Carbon;
+
 
 
 class CarsController extends Controller
@@ -51,6 +54,8 @@ class CarsController extends Controller
     {
         $email_penjual = auth()->user()->email;
 
+        $now = Carbon::now('Asia/Jakarta');
+
         $post_data = [
             'image' => 'https://community.gamedev.tv/uploads/db2322/original/3X/9/7/9780f0418136d061a49edef8a94c8d88e1ad1642.jpeg',
             'merk' => $request->merk,
@@ -64,6 +69,7 @@ class CarsController extends Controller
             'deskripsi' => $request->deskripsi,
             'kontak_penjual' => $request->kontak_penjual,
             'email_penjual' => $email_penjual,
+            'upload_timestamp' => $now->toDateTimeString(),
         ];
         $postRef = $this->database->getReference($this->tablename)->push($post_data);
         if ($postRef) {

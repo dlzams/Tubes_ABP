@@ -9,6 +9,8 @@ use Kreait\Firebase\Contract\Auth;
 use Kreait\Firebase\Exception\FirebaseException;
 use Carbon\Carbon;
 use Kreait\Firebase\Contract\Database;
+use Illuminate\Pagination\LengthAwarePaginator;
+
 
 use Session;
 
@@ -47,7 +49,31 @@ class HomeController extends Controller
       $reference = array_reverse($references, true);
       $reference1 = $this->database->getReference($this->tablename1)->getValue();
 
-      return view('home', compact('user', 'totalUsers', 'reference', 'reference1'));
+      // Mengatur pagination
+      $perPage = 9;
+      $currentPage = request()->input('page') ?? 1;
+
+      // Memastikan bahwa reference memiliki data sebelum dilakukan pagination
+      if (!empty($reference)) {
+          $pagedData = array_slice($reference, ($currentPage - 1) * $perPage, $perPage);
+      } else {
+          $pagedData = [];
+      }
+
+      // Transform array menjadi koleksi Illuminate\Support\Collection
+      $pagedCollection = collect($pagedData);
+
+      // Membuat instance dari LengthAwarePaginator
+      $pagedPaginator = new LengthAwarePaginator(
+          $pagedCollection,
+          count($reference),
+          $perPage,
+          $currentPage,
+          ['path' => LengthAwarePaginator::resolveCurrentPath()]
+      );
+
+
+      return view('home', compact('user', 'totalUsers', 'pagedPaginator','reference', 'reference1'));
     } catch (\Exception $e) {
       return $e->getmessage();
     }

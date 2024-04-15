@@ -74,21 +74,26 @@
         </div>
 
         <!-- Cards Section -->
+
         <div class="row mt-4">
-            @forelse($reference as $key => $item)
+            @forelse($pagedPaginator->items() as $key => $item)
                 <div class="col-md-4 mb-4">
                     <div class="card-2 bg-white shadow-lg rounded-lg overflow-hidden">
                         <figure>
                             <img src="{{ $item['image'] }}" alt="car!" class="object-cover w-full h-56">
                         </figure>
                         <div class="card-body">
-                            <h2 class="text-xl font-semibold">{{ $item['merk'] }} {{ $item['model'] }}
-                                ({{ $item['tahun_pembuatan'] }})
+                            <h2 class="text-xl font-semibold">{{ ucwords($item['merk']) }} {{ $item['model'] }}
+                                ({{ $item['tahun_pembuatan'] }}) 
+                                @if($item['kondisi'] == 'Baru')
+                                    <div class="badge badge-secondary">NEW</div>
+                                @else
+                                    <div class="badge badge-accent">USED</div>
+                                @endif
                             </h2>
-                            <p class="text-sm text-black">Kondisi : {{ $item['kondisi'] }}</p>
                             <p class="text-sm text-black">Harga : Rp. {{ $item['harga'] }}</p>
                             <div class="flex justify-end mt-1">
-                                <a href="{{ url('/home/product_details/' . $key) }}" class="btn btn-success">Details</a>
+                                <a href="{{ url('/home/product_details/' . $key) }}" class="btn btn-sm btn-ghost">Details</a>
                             </div>
                             
                         </div>
@@ -101,5 +106,31 @@
             @endforelse
 
         </div>
+        <!-- pagination nih -->
+        <div class="join col-md-12 justify-center">
+            {{-- Previous Page Link --}}
+            @if ($pagedPaginator->onFirstPage())
+                <button class="join-item btn">&laquo;</button>
+            @else
+                <button class="join-item btn" onclick="window.location='{{ $pagedPaginator->previousPageUrl() }}'">&laquo;</button>
+            @endif
+
+            {{-- Pagination Elements --}}
+            @foreach ($pagedPaginator->getUrlRange(1, $pagedPaginator->lastPage()) as $page => $url)
+                @if ($page == $pagedPaginator->currentPage())
+                    <button class="join-item btn btn-active">{{ $page }}</button>
+                @else
+                    <button class="join-item btn" onclick="window.location='{{ $url }}'">{{ $page }}</button>
+                @endif
+            @endforeach
+
+            {{-- Next Page Link --}}
+            @if ($pagedPaginator->hasMorePages())
+                <button class="join-item btn" onclick="window.location='{{ $pagedPaginator->nextPageUrl() }}'">&raquo;</button>
+            @else
+                <button class="join-item btn">&raquo;</button>
+            @endif
+        </div>
+
     </div>
 @endsection
