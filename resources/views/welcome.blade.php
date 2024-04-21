@@ -7,6 +7,10 @@
             </li>
         @else
             <li class="nav-item">
+                <a class="nav-link text-dark" href="{{ url('/home') }}">Home</a>
+            </li>
+
+            <li class="nav-item">
                 <a class="nav-link text-dark" href="{{ route('login') }}">Login</a>
             </li>
 

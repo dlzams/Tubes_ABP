@@ -23,7 +23,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('user', 'fireauth');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/email/verify', [App\Http\Controllers\Auth\ResetController::class, 'verify_email'])->name('verify')->middleware('fireauth');
 
@@ -36,6 +36,8 @@ Route::resource('/home/profile', App\Http\Controllers\Auth\ProfileController::cl
 Route::resource('/home/admin', App\Http\Controllers\Auth\AdminController::class)->middleware(['user', 'fireauth']);
 
 Route::middleware(['auth', 'fireauth'])->group(function () {
+    Route::get('/search', [App\Http\Controllers\HomeController::class, 'search'])->name('search');
+
     Route::get('/home/cars', [App\Http\Controllers\Firebase\CarsController::class, 'index'])->name('cars');
     Route::get('/home/cars/add_cars', function () {
         return view('adminpage.add_cars');

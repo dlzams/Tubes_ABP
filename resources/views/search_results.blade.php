@@ -14,31 +14,24 @@
             </li>
         @endif
     @else
-        @if ($user->customClaims['admin'])
-            <li class="nav-item">
-                <a class="nav-link text-dark" href="/home/admin">{{ __('Seller') }}</a>
-            </li>
-        @endif
-
         <li class="nav-item">
             <a class="nav-link text-dark" href="/home/profile">{{ __('Profile') }}</a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link text-dark" href="{{ route('logout') }}"
+            <a class="nav-link text-dark" href="{{ url('/home') }}">Home</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-dark active" href="{{ route('logout') }}"
                 onclick="event.preventDefault();
-      document.getElementById('logout-form').submit();">
+        document.getElementById('logout-form').submit();">
                 {{ __('Logout') }}
             </a>
             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                 @csrf
             </form>
         </li>
-        @if ($user->customClaims['admin'] == false)
-            <li class="nav-item">
-                <a class="nav-link text-dark" href="/home/iamadmin">Become Seller</a>
-            </li>
-        @endif
     @endguest
 @endsection
 
@@ -55,54 +48,12 @@
 
 @section('content')
     <div class="container">
+        <h1 class="mb-4">Search Results for "{{ $query }}"
+            @if ($filter)
+                and "{{ $filter }}"
+            @endif
+        </h1>
         <div class="row">
-            <div class="col-md-12">
-
-                @if (session('status'))
-                    <div class="alert alert-warning mb-2">
-                        {{ session('status') }}
-                    </div>
-                @endif
-
-                <form action="{{ route('search') }}" method="GET" class="mb-4"
-                    style="display: flex; justify-content: center; align-items: center; text-align: center;">
-                    <div class="join">
-
-                        <div>
-                            <input type="text" name="query" class="input input-bordered join-item bg-white rounded-md"
-                                placeholder="Search" />
-                        </div>
-
-                        <select name="filter" class="select select-bordered join-item bg-white rounded-md">
-                            <option disabled selected>Filter</option>
-                            <option value="Bekas">USED</option>
-                            <option value="Baru">NEW</option>
-                        </select>
-
-                        <div class="indicator">
-                            <button class="btn btn-outline btn-info" type="submit">Search</button>
-                        </div>
-
-                    </div>
-                </form>
-
-                <div class="card-1">
-                    <div class="card-header">
-                        <h4 class="text-lg font-semibold" style="margin-left: 3rem; margin-right: 3rem;">Cars List
-                            @guest
-                                <p class="float-end">Hello, Guest</p>
-                            @else
-                                <p class="float-end">Hello, {{ $user->displayName }}</p>
-                            @endguest
-                        </h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Cards Section -->
-
-        <div class="row mt-4">
             @forelse($pagedPaginator->items() as $key => $item)
                 <div class="col-md-4 mb-4">
                     <div class="card-2 bg-white shadow-lg rounded-lg overflow-hidden">
@@ -123,7 +74,6 @@
                                 <a href="{{ url('/home/product_details/' . $key) }}"
                                     class="btn btn-sm btn-ghost">Details</a>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -132,7 +82,6 @@
                     <p class="text-center">No Record Found</p>
                 </div>
             @endforelse
-
         </div>
         <!-- pagination nih -->
         <div class="join col-md-12 justify-center">
@@ -162,6 +111,5 @@
                 <button class="join-item btn">&raquo;</button>
             @endif
         </div>
-
     </div>
 @endsection
